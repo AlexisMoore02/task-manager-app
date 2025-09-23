@@ -63,4 +63,4 @@ npm run dev
 ```
 
 ## Деплой
-Приложение доступно по ссылке: [Task Manager Live](https://task-manager-9017d.web.app/login)
+Приложение доступно по ссылке: [Task Manager Live](https://task-manager-9017d.web.app/)
