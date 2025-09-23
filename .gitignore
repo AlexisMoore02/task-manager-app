@@ -31,8 +31,5 @@ dist-ssr/
 *.sln
 *.sw?
 
-# Firebase config
-firebaseConfig.js
-
 # Firebase emulator logs (optional)
 firebase-debug.log
