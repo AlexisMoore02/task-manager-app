@@ -27,7 +27,7 @@
 ## Установка и запуск
 #### Клонировать репозиторий
 ```bash
-git clone https://github.com/твое_имя/task-manager-react.git
+git clone https://github.com/AlexisMoore02/task-manager-app.git
 ```
 
 #### Перейти в папку проекта
@@ -62,8 +62,5 @@ VITE_FIREBASE_APP_ID=...
 npm run dev
 ```
 
-### Деплой
-##### Приложение можно развернуть на:
-[Vercel](https://vercel.com/)
-[Netlify](https://www.netlify.com/)
-[Firebase Hosting](https://firebase.google.com/docs/hosting?hl=ru)
+## Деплой
+Приложение доступно по ссылке: [Task Manager Live](https://task-manager-9017d.web.app/login)
