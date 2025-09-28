@@ -9,7 +9,15 @@ import { registerUser, loginWithEmail, logoutUser, resetPassword } from "../serv
  */
 const isOnline = () => navigator.onLine;
 
-
+/**
+* Сериализуемые данные пользователя
+*/
+const serializeUser = (user) => user ? {
+  uid: user.uid,
+  email: user.email,
+  displayName: user.displayName || null
+} : null;
+ 
 /**
  * Авторизация пользователя по email и паролю
  *
@@ -25,7 +33,7 @@ export const login = createAsyncThunk(
 
     try {
       const user = await loginWithEmail({ email, password });
-      return { uid: user.uid, email: user.email, displayName: user.displayName };
+      return serializeUser(user);
     } catch (error) {
       return rejectWithValue({ code: error.code, message: error.message });
     }
@@ -43,7 +51,8 @@ export const register = createAsyncThunk(
     if (!isOnline()) return rejectWithValue("Нет соединения с интернетом");
 
     try {
-      return await registerUser(values);
+      const user = await registerUser(values);
+      return serializeUser(user);
     } catch (error) {
       return rejectWithValue({ code: error.code, message: error.message });
     }
@@ -93,7 +102,7 @@ export const listenToAuthChanges = createAsyncThunk(
   async (_, { dispatch }) => {
     return new Promise((resolve) => {
       const unsubscribe = onAuthStateChanged(auth, (user) => {
-        dispatch(user ? setUser({ uid: user.uid, email: user.email, displayName: user.displayName || null }) : setUser(null));
+        dispatch(setUser(serializeUser(user)));
         dispatch(authChecked());
         resolve();
       });
@@ -108,7 +117,7 @@ const authSlice = createSlice({
     user: null,
     loading: false,
     error: null,
-    authChecked: false
+    authChecked: false,
   },
   reducers: {
     authChecked: (state) => { state.authChecked = true; },
@@ -116,20 +125,17 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // login
+
       .addCase(login.pending, (state) => { state.loading = true; state.error = null; })
       .addCase(login.fulfilled, (state, action) => { state.loading = false; state.user = action.payload; })
       .addCase(login.rejected, (state, action) => { state.loading = false; state.error = action.payload; })
 
-      // register
       .addCase(register.pending, (state) => { state.loading = true; state.error = null; })
       .addCase(register.fulfilled, (state, action) => { state.loading = false; state.user = action.payload; })
       .addCase(register.rejected, (state, action) => { state.loading = false; state.error = action.payload; })
 
-      // logout
       .addCase(logout.fulfilled, (state) => { state.user = null; })
 
-      // resetPassword
       .addCase(resetPasswordThunk.pending, (state) => { state.loading = true; state.error = null; })
       .addCase(resetPasswordThunk.fulfilled, (state) => { state.loading = false; })
       .addCase(resetPasswordThunk.rejected, (state, action) => { state.loading = false; state.error = action.payload; });
