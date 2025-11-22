@@ -1,5 +1,5 @@
 import { Card, Tag, Button, Popconfirm, Typography, Tooltip, theme } from "antd";
-import { CheckCircleOutlined, UndoOutlined, EditOutlined, DeleteOutlined, CopyOutlined, ArrowsAltOutlined, ShrinkOutlined } from "@ant-design/icons";
+import { CheckCircleOutlined, SyncOutlined, EditOutlined, DeleteOutlined, CopyOutlined, ArrowsAltOutlined, ShrinkOutlined } from "@ant-design/icons";
 import { renderTaskDate, formatDate } from "../../utils/dateHelpers";
 
 const { Paragraph } = Typography;
@@ -13,15 +13,13 @@ export const TaskItem = ({
   task,
   isCardView = false,
   onEdit,
-  onDelete,
-  onToggle,
+  onDelete, 
   onView,
   actionLoading,
 }) => {
   const { token } = theme.useToken();
 
-  const loadingDelete = !!actionLoading?.[task.id]?.delete;
-  const loadingToggle = !!actionLoading?.[task.id]?.toggle;
+  const loadingDelete = !!actionLoading?.[task.id]?.delete; 
 
   const borderColor = task.completed
     ? token.Card.taskBorderCompleted
@@ -31,14 +29,7 @@ export const TaskItem = ({
     ? token.Card.taskBorderMedium
     : token.Card.taskBorderLow;
 
-  const actions = [
-    <Button
-      type="text"
-      icon={task.completed ? <UndoOutlined /> : <CheckCircleOutlined />}
-      onClick={() => onToggle(task)}
-      key="toggle"
-      loading={loadingToggle}
-    />,
+  const actions = [ 
     <Button
       type="text"
       icon={<EditOutlined />}
@@ -116,7 +107,7 @@ export const TaskItem = ({
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: "2fr 3fr 1fr 1fr 1fr",
+        gridTemplateColumns: "2fr 3fr 1fr 1fr 0.5fr  1fr",
         gap: "1rem",
         alignItems: "center",
         padding: 8,
@@ -142,14 +133,20 @@ export const TaskItem = ({
         {task.description}
       </Paragraph>
       <Tag
-        color={borderColor}
-        icon={task.completed && <CheckCircleOutlined />}
+        color={borderColor} 
         style={{ textAlign: "center" }}
       >
         {task.priority}
       </Tag>
-      {renderTaskDate(task.createdAt, task.updatedAt)}
+     
+      <Tag
+            color={!task.completed ? "#2858beff" : "#7d7e7dff"}
+            icon={task.completed ? <CheckCircleOutlined /> : <SyncOutlined />}
+          >
+            {!task.completed ? "В процессе" : "Выполнена"}
+          </Tag>
       <div style={{ display: "flex", gap: "0.25rem" }}>{actions}</div>
+       {renderTaskDate(task.createdAt, task.updatedAt)}
     </div>
   );
 };

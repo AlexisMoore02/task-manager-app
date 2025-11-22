@@ -21,8 +21,7 @@ export default function Tasks() {
     setIsEditing,
     isModalOpen,
     setIsModalOpen,
-    filteredTasks,
-    handleToggleComplete,
+    filteredTasks, 
     handleDeleteTask,
     handleSaveTask,
     actionLoading,
@@ -90,8 +89,7 @@ export default function Tasks() {
                   setIsEditing(true);
                   handleTaskClick(id);
                 }}
-                onDelete={handleDeleteTask}
-                onToggle={handleToggleComplete}
+                onDelete={handleDeleteTask} 
                 onView={handleTaskClick}
                 actionLoading={actionLoading}
                 isMobile={isMobile}
@@ -102,7 +100,7 @@ export default function Tasks() {
                   <Splitter.Panel
                     size="40%"
                     resizable={false}
-                    style={{ padding: "15px 0 15px 15px" }}
+                    style={{ padding: "15px 0 15px 15px" }} 
                   >
                     <TaskComponents.TaskInfo
                       darkMode={darkMode}

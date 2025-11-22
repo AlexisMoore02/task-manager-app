@@ -6,7 +6,7 @@ import { TaskColumn } from "./TaskColumn";
  * - Сортирует задачи по полю order
  * - Поддерживает мобильный и десктопный вид
  */
-export const TaskBoard = ({ tasks, onEdit, onDelete, onToggle, onView, actionLoading, isMobile }) => {
+export const TaskBoard = ({ tasks, onEdit, onDelete, onView, actionLoading, isMobile }) => {
   
   const sortedTasks = useMemo(
     () => [...tasks].sort((a, b) => (a.order || 0) - (b.order || 0)),
@@ -24,8 +24,7 @@ export const TaskBoard = ({ tasks, onEdit, onDelete, onToggle, onView, actionLoa
               tasks={[task]}
               isCardView
               onEdit={onEdit}
-              onDelete={onDelete}
-              onToggle={onToggle}
+              onDelete={onDelete} 
               onView={onView}
               actionLoading={actionLoading} 
             />
@@ -37,8 +36,7 @@ export const TaskBoard = ({ tasks, onEdit, onDelete, onToggle, onView, actionLoa
           tasks={sortedTasks}
           isCardView={false}
           onEdit={onEdit}
-          onDelete={onDelete}
-          onToggle={onToggle}
+          onDelete={onDelete} 
           onView={onView}
           actionLoading={actionLoading} 
         />
