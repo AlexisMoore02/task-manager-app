@@ -36,5 +36,11 @@ export const TaskControls = ({ filter, setFilter, search, setSearch, onAddTask }
         Добавить задачу
       </Button>
     </Col>
+    {/* <Segmented
+    options={[
+      { value: 'List', icon: <BarsOutlined /> },
+      { value: 'Kanban', icon: <AppstoreOutlined /> },
+    ]}
+  /> */}
   </Row>
 );

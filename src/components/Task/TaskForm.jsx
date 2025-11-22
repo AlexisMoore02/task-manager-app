@@ -5,24 +5,16 @@ import { useNotification } from "../../hooks/useNotification";
 /**
  * Компонент формы создания/редактирования задачи
  */
-export const TaskForm = ({ open, onClose, taskToEdit, onSubmit }) => {
+export const TaskForm = ({ open, onClose, onSubmit }) => {
   const [form] = Form.useForm();
   const [notify, contextHolder] = useNotification();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!open) return;
-
-    if (taskToEdit) {
-      form.setFieldsValue({
-        title: taskToEdit.title,
-        description: taskToEdit.description,
-        priority: taskToEdit.priority,
-      });
-    } else {
       form.resetFields();
-    }
-  }, [taskToEdit, form, open]);
+  
+  }, [form, open]);
 
   const handleOk = async () => {
     try {
@@ -30,10 +22,10 @@ export const TaskForm = ({ open, onClose, taskToEdit, onSubmit }) => {
       const values = await form.validateFields();
       if (!values.description) values.description = "";
 
-      const taskData = taskToEdit ? { ...taskToEdit, ...values } : values;
+      const taskData =  values;
       await onSubmit(taskData);
 
-      notify("success", taskToEdit ? "Задача обновлена" : "Задача добавлена");
+      notify("success", "Задача добавлена");
       form.resetFields();
       onClose();
     } catch (err) {
@@ -48,7 +40,7 @@ export const TaskForm = ({ open, onClose, taskToEdit, onSubmit }) => {
     <>
       {contextHolder}
       <Modal
-        title={taskToEdit ? "Редактировать задачу" : "Новая задача"}
+        title={"Новая задача"}
         open={open}
         onCancel={onClose}
         width={400}
@@ -77,9 +69,9 @@ export const TaskForm = ({ open, onClose, taskToEdit, onSubmit }) => {
           >
             <Select
               options={[
-                { value: "low", label: "Низкий" },
-                { value: "medium", label: "Средний" },
-                { value: "high", label: "Высокий" },
+                { value: "Низкий", label: "Низкий" },
+                { value: "Средний", label: "Средний" },
+                { value: "Высокий", label: "Высокий" },
               ]}
             />
           </Form.Item>

@@ -4,7 +4,7 @@ import { TaskItem } from "./TaskItem";
  * Колонка задач
  * - Отображает задачи в виде карточек или списка в зависимости от размера экрана (мобильный/десктоп)
  */
-export const TaskColumn = ({ tasks, isCardView, onEdit, onDelete, onToggle, actionLoading }) => {
+export const TaskColumn = ({ tasks, isCardView, onEdit, onDelete, onToggle, onView, actionLoading }) => {
   return (
     <div style={{ padding: "1rem", borderRadius: 8 }}>
       {tasks.map((task) => (
@@ -15,7 +15,8 @@ export const TaskColumn = ({ tasks, isCardView, onEdit, onDelete, onToggle, acti
           onEdit={onEdit}
           onDelete={onDelete}
           onToggle={onToggle}
-          actionLoading={actionLoading}
+          onView={onView}
+          actionLoading={actionLoading} 
         />
       ))}
     </div>

@@ -21,7 +21,7 @@ export const ForgotPasswordForm = ({ onSubmit, loading, LoginAction }) => {
       </Form.Item>
 
       <div style={{ display: "flex", justifyContent: "center"}}>
-        <a href="/login" onClick={LoginAction} style={{ color: "#28BE46" }}>Вернуться</a>
+        <a href="/login" onClick={LoginAction} style={{ color: "#9a6decff" }}>Вернуться</a>
       </div>
     </Form>
   );

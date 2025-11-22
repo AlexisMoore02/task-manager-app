@@ -53,7 +53,7 @@ export const LoginForm = ({
         <a
           href="/forgot-password"
           onClick={ForgotAction}
-          style={{ color: "#28BE46" }}
+          style={{ color: "#9a6decff" }}
         >
           Забыли пароль?
         </a>
@@ -68,7 +68,7 @@ export const LoginForm = ({
         <a
           href="/register"
           onClick={RegisterAction}
-          style={{ color: "#28BE46" }}
+          style={{ color: "#9a6decff" }}
         >
           Регистрация
         </a>

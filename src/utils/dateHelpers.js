@@ -4,7 +4,7 @@
  * @param {string} mode - "date" для даты, "datetime" для даты + времени
  * @returns {string} Отформатированная дата
  */
-export const formatDate = (dateString, mode = "date") => {
+export const formatDate = (dateString, mode) => {
   if (!dateString) return "";
 
   const date = new Date(dateString);
@@ -29,7 +29,10 @@ export const formatDate = (dateString, mode = "date") => {
     return date.toLocaleDateString(); // формат "дд.мм.гггг"
   }
 
-  const time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const time = date.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
   if (isToday) return `Сегодня, ${time}`;
   if (isYesterday) return `Вчера, ${time}`;

@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from "react";
+import { useMemo } from "react";
 import { TaskColumn } from "./TaskColumn";
 
 /**
@@ -6,20 +6,12 @@ import { TaskColumn } from "./TaskColumn";
  * - Сортирует задачи по полю order
  * - Поддерживает мобильный и десктопный вид
  */
-export const TaskBoard = ({ tasks, onEdit, onDelete, onToggle, actionLoading }) => {
+export const TaskBoard = ({ tasks, onEdit, onDelete, onToggle, onView, actionLoading, isMobile }) => {
   
   const sortedTasks = useMemo(
     () => [...tasks].sort((a, b) => (a.order || 0) - (b.order || 0)),
     [tasks]
-  );
-
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 768);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  ); 
 
   return (
     <div>
@@ -34,7 +26,8 @@ export const TaskBoard = ({ tasks, onEdit, onDelete, onToggle, actionLoading }) 
               onEdit={onEdit}
               onDelete={onDelete}
               onToggle={onToggle}
-              actionLoading={actionLoading}
+              onView={onView}
+              actionLoading={actionLoading} 
             />
           ))}
         </div>
@@ -46,7 +39,8 @@ export const TaskBoard = ({ tasks, onEdit, onDelete, onToggle, actionLoading }) 
           onEdit={onEdit}
           onDelete={onDelete}
           onToggle={onToggle}
-          actionLoading={actionLoading}
+          onView={onView}
+          actionLoading={actionLoading} 
         />
       )}
     </div>

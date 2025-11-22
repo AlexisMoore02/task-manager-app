@@ -79,7 +79,7 @@ export const RegisterForm = ({ onSubmit, loading, LoginAction }) => {
 
       <div style={{ display: "flex", justifyContent: "center", gap: "6px" }}>
         <span>Уже есть аккаунт?</span>{" "}
-        <a href="/login" onClick={LoginAction} style={{ color: "#28BE46" }}>
+        <a href="/login" onClick={LoginAction} style={{ color: "#9a6decff" }}>
           Войти
         </a>
       </div>

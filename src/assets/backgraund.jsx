@@ -13,14 +13,14 @@ export const Background = ({ theme }) => {
   const options = useMemo(() => { 
     return {
       background: {
-        color: theme ? "#2E3337" : "#e1e2e2ff",  
+        color: theme ? "#2E3337" : "#a7a7a7ff",  
       },
       particles: {
         number: { value: 20, density: { enable: true, area: 450 } },
-        color: { value: theme ? ["#28be4673", "#1b8c337c", "#474b4f5d"] : ["#2e3337a1", "#474b4fa9", "#28be4671"] },
-        shape: { type: "square" },
+        color: { value: theme ? ["#5c3baa73", "#7b38c77c", "#474b4f5d"] : ["#2e3337a1", "#474b4fa9", "#5837a571"] },
+        shape: { type: "circle" },
         opacity: { value: 1 },
-        size: { value: { min: 5, max: 50 } },
+        size: { value: { min: 1, max: 15 } },
         links: {
           enable: true,
           distance: 200,
