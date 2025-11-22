@@ -1,18 +1,23 @@
 import { Card, Tag, Button, Popconfirm, Typography, Tooltip, theme } from "antd";
-import {
-  CheckCircleOutlined, UndoOutlined, EditOutlined, DeleteOutlined,
-  CopyOutlined, ArrowsAltOutlined, ShrinkOutlined
-} from "@ant-design/icons";
+import { CheckCircleOutlined, UndoOutlined, EditOutlined, DeleteOutlined, CopyOutlined, ArrowsAltOutlined, ShrinkOutlined } from "@ant-design/icons";
 import { renderTaskDate, formatDate } from "../../utils/dateHelpers";
 
 const { Paragraph } = Typography;
 
 /**
  * Отображение одной задачи
- * - Карточка или строка в списке в зависимости от размера экрана  
+ * - Карточка или строка в списке в зависимости от размера экрана
  * - Состав карточки: наименование, описание, приоритет, дата, действия над задачей
  */
-export const TaskItem = ({ task, isCardView = false, onEdit, onDelete, onToggle, actionLoading }) => {
+export const TaskItem = ({
+  task,
+  isCardView = false,
+  onEdit,
+  onDelete,
+  onToggle,
+  onView,
+  actionLoading,
+}) => {
   const { token } = theme.useToken();
 
   const loadingDelete = !!actionLoading?.[task.id]?.delete;
@@ -20,9 +25,9 @@ export const TaskItem = ({ task, isCardView = false, onEdit, onDelete, onToggle,
 
   const borderColor = task.completed
     ? token.Card.taskBorderCompleted
-    : task.priority === "high"
+    : task.priority === "Высокий"
     ? token.Card.taskBorderHigh
-    : task.priority === "medium"
+    : task.priority === "Средний"
     ? token.Card.taskBorderMedium
     : token.Card.taskBorderLow;
 
@@ -34,14 +39,24 @@ export const TaskItem = ({ task, isCardView = false, onEdit, onDelete, onToggle,
       key="toggle"
       loading={loadingToggle}
     />,
-    <Button type="text" icon={<EditOutlined />} onClick={() => onEdit(task)} key="edit" />,
+    <Button
+      type="text"
+      icon={<EditOutlined />}
+      onClick={() => onEdit(task.id)}
+      key="edit"
+    />,
     <Popconfirm
       title="Удалить задачу?"
       color={token.Card.taskBg}
       onConfirm={() => onDelete(task)}
       key="delete"
     >
-      <Button type="text" danger icon={<DeleteOutlined />} loading={loadingDelete} />
+      <Button
+        type="text"
+        danger
+        icon={<DeleteOutlined />}
+        loading={loadingDelete}
+      />
     </Popconfirm>,
   ];
 
@@ -51,23 +66,49 @@ export const TaskItem = ({ task, isCardView = false, onEdit, onDelete, onToggle,
       rows: 4,
       expandable: "collapsible",
       symbol: (expanded) =>
-        expanded ? <ShrinkOutlined style={{ color: "#28BE46" }} /> : <ArrowsAltOutlined style={{ color: "#28BE46" }} />,
+        expanded ? (
+          <ShrinkOutlined style={{ color: "#28BE46" }} />
+        ) : (
+          <ArrowsAltOutlined style={{ color: "#28BE46" }} />
+        ),
     },
-    copyable: task.description ? { text: task.description, icon: <CopyOutlined style={{ color: "#28BE46" }} /> } : false,
+    copyable: task.description
+      ? {
+          text: task.description,
+          icon: <CopyOutlined style={{ color: "#28BE46" }} />,
+        }
+      : false,
   };
 
   return isCardView ? (
     <Card
       hoverable
-      title={<Tooltip title={task.title}><Paragraph strong ellipsis={{ rows: 1 }}>{task.title}</Paragraph></Tooltip>}
+      title={
+        <Tooltip title={task.title}>
+          <Paragraph
+            strong
+            ellipsis={{ rows: 1 }}
+            style={{ cursor: "pointer" }}
+            onClick={() => onView(task.id)}
+          >
+            {task.title}
+          </Paragraph>
+        </Tooltip>
+      }
       extra={
         <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
           <Tag color={borderColor}>{task.priority}</Tag>
-          <Tag color={borderColor}>{formatDate(task.updatedAt || task.createdAt)}</Tag>
+          <Tag color={borderColor}>
+            {formatDate(task.updatedAt || task.createdAt)}
+          </Tag>
         </div>
       }
       actions={actions}
-      style={{ border: `1px solid ${borderColor}`, borderRadius: token.borderRadius, background: token.Card.taskBg }}
+      style={{
+        border: `1px solid ${borderColor}`,
+        borderRadius: token.borderRadius,
+        background: token.Card.taskBg,
+      }}
     >
       <Paragraph {...descriptionProps}>{task.description}</Paragraph>
     </Card>
@@ -84,9 +125,29 @@ export const TaskItem = ({ task, isCardView = false, onEdit, onDelete, onToggle,
         marginBottom: 8,
       }}
     >
-      <Paragraph strong>{task.title}</Paragraph>
-      <Paragraph {...descriptionProps}>{task.description}</Paragraph>
-      <Tag color={borderColor}>{task.priority}</Tag>
+      <Paragraph
+        strong
+        style={{
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          paddingLeft: "2em",
+          margin: "0",
+        }}
+        onClick={() => onView(task.id)}
+      >
+        {task.title}
+      </Paragraph>
+      <Paragraph {...descriptionProps} style={{ margin: "0" }}>
+        {task.description}
+      </Paragraph>
+      <Tag
+        color={borderColor}
+        icon={task.completed && <CheckCircleOutlined />}
+        style={{ textAlign: "center" }}
+      >
+        {task.priority}
+      </Tag>
       {renderTaskDate(task.createdAt, task.updatedAt)}
       <div style={{ display: "flex", gap: "0.25rem" }}>{actions}</div>
     </div>

@@ -16,7 +16,8 @@ export const useTaskActions = () => {
   const [actionLoading, setActionLoading] = useState({});
   const [filter, setFilter] = useState("all");
   const [search, setSearch] = useState("");
-  const [taskToEdit, setTaskToEdit] = useState(null);
+  
+  const [isEditing, setIsEditing] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [notify, contextHolder] = useNotification();
@@ -79,8 +80,8 @@ export const useTaskActions = () => {
     } catch (err) {
       notifyRef.current("error", "Ошибка задачи", err);
     } finally {
-      setIsModalOpen(false);
-      setTaskToEdit(null);
+      // setIsModalOpen(false);
+      setIsEditing(false);
     }
   }, [dispatch, userUid]);
 
@@ -101,7 +102,7 @@ export const useTaskActions = () => {
 
   return {
     darkMode, userUid, loading, filter, setFilter, search, setSearch,
-    taskToEdit, setTaskToEdit, isModalOpen, setIsModalOpen,
+    isEditing, setIsEditing, isModalOpen, setIsModalOpen,
     filteredTasks, handleSaveTask, handleDeleteTask, handleToggleComplete,
     actionLoading, contextHolder,
   };
