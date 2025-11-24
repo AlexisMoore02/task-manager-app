@@ -88,22 +88,22 @@ export const useTaskActions = () => {
   /**
  * Обработчик действия: изменение статуса задачи
  */ 
-  const handleToggleComplete = useCallback(async (task) => {
-    setActionLoading(prev => ({ ...prev, [task.id]: { ...(prev[task.id] || {}), toggle: true } }));
-    try {
-      await dispatch(updateTask({ id: task.id, updatedTask: { completed: !task.completed } })).unwrap();
-      notifyRef.current("success", "Статус задачи обновлен");
-    } catch (err) {
-      notifyRef.current("error", "Ошибка обновления статуса", err);
-    } finally {
-      setActionLoading(prev => ({ ...prev, [task.id]: { ...(prev[task.id] || {}), toggle: false } }));
-    }
-  }, [dispatch]);
+  // const handleToggleComplete = useCallback(async (task) => {
+  //   setActionLoading(prev => ({ ...prev, [task.id]: { ...(prev[task.id] || {}), toggle: true } }));
+  //   try {
+  //     await dispatch(updateTask({ id: task.id, updatedTask: { completed: !task.completed } })).unwrap();
+  //     notifyRef.current("success", "Статус задачи обновлен");
+  //   } catch (err) {
+  //     notifyRef.current("error", "Ошибка обновления статуса", err);
+  //   } finally {
+  //     setActionLoading(prev => ({ ...prev, [task.id]: { ...(prev[task.id] || {}), toggle: false } }));
+  //   }
+  // }, [dispatch]);
 
   return {
     darkMode, userUid, loading, filter, setFilter, search, setSearch,
     isEditing, setIsEditing, isModalOpen, setIsModalOpen,
-    filteredTasks, handleSaveTask, handleDeleteTask, handleToggleComplete,
+    filteredTasks, handleSaveTask, handleDeleteTask, 
     actionLoading, contextHolder,
   };
 };
